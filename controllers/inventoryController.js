@@ -61,8 +61,46 @@ const getInventoryItemById = (req, res) => {
     });
 };
 
+
+// PUT - Update inventory item
+const updateInventoryItem = (req, res) => {
+    const id = Number(req.params.id);
+
+    const { name, category, price, quantity } = req.body;
+
+    // Find item index
+    const itemIndex = inventory.findIndex(
+        (item) => item.id === id
+    );
+
+    // Check if item exists
+    if (itemIndex === -1) {
+        return res.status(404).json({
+            success: false,
+            message: "Inventory item not found",
+        });
+    }
+
+    // Update inventory item
+    inventory[itemIndex] = {
+        id,
+        name,
+        category,
+        price,
+        quantity,
+    };
+
+    // Send response
+    res.status(200).json({
+        success: true,
+        message: "Inventory item updated successfully",
+        data: inventory[itemIndex],
+    });
+};
+
 module.exports = {
     addInventoryItem,
     getAllInventoryItems,
     getInventoryItemById,
+    updateInventoryItem,
 };

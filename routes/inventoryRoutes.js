@@ -6,7 +6,9 @@ const {
     addInventoryItem,
     getAllInventoryItems,
     getInventoryItemById,
+    updateInventoryItem,
 } = require("../controllers/inventoryController");
+
 
 // POST - Add inventory item
 router.post("/", addInventoryItem);
@@ -16,5 +18,9 @@ router.get("/", getAllInventoryItems);
 
 // GET - Fetch single inventory item
 router.get("/:id", getInventoryItemById);
+
+// PUT - Update inventory item
+router.put("/:id", updateInventoryItem);
+
 
 module.exports = router;
