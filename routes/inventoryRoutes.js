@@ -3,6 +3,11 @@ const express = require("express");
 const router = express.Router();
 
 const {
+  validateInventoryItem,
+} = require("../middleware/validation");
+
+// middleware to validate inventory item data for POST and PUT requests
+const {
     addInventoryItem,
     getAllInventoryItems,
     getInventoryItemById,
@@ -12,7 +17,7 @@ const {
 
 
 // POST - Add inventory item
-router.post("/", addInventoryItem);
+router.post("/", validateInventoryItem, addInventoryItem);
 
 // GET - Fetch all inventory items
 router.get("/", getAllInventoryItems);
@@ -21,7 +26,7 @@ router.get("/", getAllInventoryItems);
 router.get("/:id", getInventoryItemById);
 
 // PUT - Update inventory item
-router.put("/:id", updateInventoryItem);
+router.put("/:id", validateInventoryItem, updateInventoryItem);
 
 // DELETE - Remove inventory item
 router.delete("/:id", deleteInventoryItem);
