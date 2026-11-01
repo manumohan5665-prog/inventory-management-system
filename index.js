@@ -2,14 +2,14 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 
+const inventoryRoutes = require("./routes/inventoryRoutes");
+const errorHandler = require("./middleware/errorHandler");
+
 // Load environment variables
 dotenv.config();
 
 // Initialize Express
 const app = express();
-
-// Import routes
-const inventoryRoutes = require("./routes/inventoryRoutes");
 
 // Middleware
 app.use(cors());
@@ -25,6 +25,19 @@ app.get("/", (req, res) => {
 
 // Inventory routes
 app.use("/api/inventory", inventoryRoutes);
+
+
+// Handle unknown routes
+app.use((req, res, next) => {
+  const error = new Error("Route not found");
+  error.statusCode = 404;
+
+  next(error);
+});
+
+// Error handler
+app.use(errorHandler);
+
 
 // Start server
 const PORT = process.env.PORT || 5000;
