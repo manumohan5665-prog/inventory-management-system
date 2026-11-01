@@ -34,10 +34,74 @@ const addInventoryItem = (req, res) => {
 
 // GET - Fetch all inventory items
 const getAllInventoryItems = (req, res) => {
+    let filteredInventory = [...inventory];
+
+    const { category, search, minQuantity, maxQuantity } = req.query;
+
+    // Filter by category
+    if (category) {
+        filteredInventory = filteredInventory.filter(
+            (item) =>
+                item.category.toLowerCase() === category.toLowerCase()
+        );
+    }
+
+    // Search by item name
+    if (search) {
+        filteredInventory = filteredInventory.filter(
+            (item) =>
+                item.name.toLowerCase().includes(search.toLowerCase())
+        );
+    }
+
+    // Filter by minimum quantity
+    if (minQuantity !== undefined) {
+        const min = Number(minQuantity);
+
+        if (!Number.isFinite(min) || min < 0) {
+            return res.status(400).json({
+                success: false,
+                message: "minQuantity must be a valid non-negative number",
+            });
+        }
+
+        filteredInventory = filteredInventory.filter(
+            (item) => item.quantity >= min
+        );
+    }
+
+    // Filter by maximum quantity
+    if (maxQuantity !== undefined) {
+        const max = Number(maxQuantity);
+
+        if (!Number.isFinite(max) || max < 0) {
+            return res.status(400).json({
+                success: false,
+                message: "maxQuantity must be a valid non-negative number",
+            });
+        }
+
+        filteredInventory = filteredInventory.filter(
+            (item) => item.quantity <= max
+        );
+    }
+
+    // Check minimum and maximum quantity
+    if (
+        minQuantity !== undefined &&
+        maxQuantity !== undefined &&
+        Number(minQuantity) > Number(maxQuantity)
+    ) {
+        return res.status(400).json({
+            success: false,
+            message: "minQuantity cannot be greater than maxQuantity",
+        });
+    }
+
     res.status(200).json({
         success: true,
-        count: inventory.length,
-        data: inventory,
+        count: filteredInventory.length,
+        data: filteredInventory,
     });
 };
 
