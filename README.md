@@ -27,7 +27,6 @@ A backend-only Inventory Management System built using **Node.js** and **Express
 
 ## Project Structure
 
-```text
 inventory-backend/
 ├── controllers/
 │   └── inventoryController.js
@@ -43,91 +42,72 @@ inventory-backend/
 ├── index.js
 ├── package.json
 └── README.md
-```
 
 ## Installation
 
 Clone the repository:
 
-```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
-```
+git clone https://github.com/manumohan5665-prog/inventory-management-system.git
 
 Navigate into the project:
 
-```bash
 cd inventory-backend
-```
 
 Install dependencies:
 
-```bash
 npm install
-```
 
 Create a `.env` file:
 
-```env
 PORT=5000
-```
 
 ## Run the Application
 
 Development mode:
 
-```bash
 npm run dev
-```
 
 Production mode:
 
-```bash
 npm start
-```
 
 The server runs at:
 
-```text
 http://localhost:5000
-```
 
 ## API Endpoints
 
 Base URL: `http://localhost:5000/api/inventory`
 
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/` | Get all inventory items |
-| GET | `/:id` | Get item by ID |
-| POST | `/` | Add a new item |
-| PUT | `/:id` | Update an item |
-| DELETE | `/:id` | Delete an item |
+ Method | Endpoint | Description 
+
+ GET    | `/`      | Get all inventory items 
+ GET    | `/:id`   | Get item by ID 
+ POST   | `/`      | Add a new item
+ PUT    | `/:id`   | Update an item
+ DELETE | `/:id`   |  Delete an item
 
 ### Search and Filtering
 
-| Query | Description |
-|---|---|
-| `?category=Electronics` | Filter by category |
-| `?search=mouse` | Search by item name |
-| `?minQuantity=10` | Minimum quantity |
-| `?maxQuantity=50` | Maximum quantity |
+ Query                   | Description
+
+ `?category=Electronics` | Filter by category
+ `?search=mouse`         | Search by item name
+ `?minQuantity=10`       | Minimum quantity
+ `?maxQuantity=50`       | Maximum quantity
 
 Example:
 
-```text
 GET /api/inventory?category=Electronics&minQuantity=10&maxQuantity=50
-```
 
 ## Sample Inventory Item
 
-```json
 {
   "name": "Wireless Mouse",
   "category": "Electronics",
   "price": 599,
   "quantity": 25
 }
-```
 
 ## Data Storage
 
